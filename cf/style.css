@@ -1,0 +1,55 @@
+@import url('https://fonts.cdnfonts.com/css/silom');
+
+:root {
+  --bg: #023;
+  --fg: #d8dfd8;
+  --faded-color: rgb(from var(--fg) r g b / 20%);
+
+  --green: #0ab28b;
+  --red: #cb4f4f;
+  --yellow: #daca63;
+
+  --padding: 4px;
+  --border: 2px;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--fg);
+
+  font-family: 'Silom', 'Courier New', monospace, sans-serif;
+}
+
+.warning {
+  background-color: var(--red);
+  border-color: var(--red);
+  --faded-color: rgb(from var(--red) r g b / 20%);
+  --fg: var(--red);
+}
+
+section {
+  margin: var(--padding);
+  margin-bottom: 1em;
+}
+
+section.dialog {
+  border-width: var(--border);
+  border-style: solid;
+  padding: var(--padding);
+  background-color: var(--faded-color);
+}
+
+section.dialog > header {
+  background-color: var(--fg);
+  color: var(--bg);
+
+  text-align: center;
+  padding-left: 1em;
+  padding-top: calc((var(--padding) / 2) - 1px);
+  padding-bottom: calc((var(--padding) / 2) - 1px);
+  margin-bottom: var(--padding);
+}
+
+section.dialog > div {
+
+}
