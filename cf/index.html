@@ -4,19 +4,114 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <main class="crt">
+      <section class="dialog" style="width: 15em">
+        <header class="title">THIS IS FINE</header>
+        <div class="content">
+          I'm okay with the events that are unfolding currently.
+        </div>
+      </section>
 
-    <section class="dialog" style="width: 15em">
-      <header class="title">WARNING</header>
-      <div class="content">
+      <section class="dialog warning">
+        <header class="title">WARNING</header>
+        <div class="content">
           Hello world
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <section class="dialog warning" style="width: 15em">
-      <header class="title">WARNING</header>
-      <div class="content">
-          Hello world
+      <section>
+        <span class="button-top selected">
+          Proceed
+        </span>
+        <span class="button-top"> Cancel </span>
+      </section>
+
+      <section>
+        <span class="button"> Cancel </span>
+        <span class="button selected">
+          Proceed
+        </span>
+      </section>
+
+      <div class="modal">
+        SYSTEM BOOT
       </div>
-    </section>
+
+      <div class="grid-3-gap blue">
+        <div class="card status"> <div class="entity">WENDY</div>
+          <div class="state">OFFLINE</div>
+          <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+          <dl>
+            <dt>TD_ID</dt><dd>FN2187</dd>
+            <dt>NETWORK</dt><dd>AVAILABLE</dd>
+            <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+            <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+            <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+          </dl>
+        </div>
+        <div class="card status"> <div class="entity">CURLY</div>
+          <div class="state">OFFLINE</div>
+          <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+          <dl>
+            <dt>TD_ID</dt><dd>T100529</dd>
+            <dt>NETWORK</dt><dd>AVAILABLE</dd>
+            <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+            <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+            <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+          </dl>
+        </div>
+        <div class="card status"> <div class="entity">NIBS</div>
+          <div class="state">OFFLINE</div>
+          <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+          <dl>
+            <dt>TD_ID</dt><dd>TK427</dd>
+            <dt>NETWORK</dt><dd>AVAILABLE</dd>
+            <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+            <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+            <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+          </dl>
+        </div>
+        <div class="card status"> <div class="entity">SLIGHTLY</div>
+          <div class="state">OFFLINE</div>
+          <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+          <dl>
+            <dt>TD_ID</dt><dd>1</dd>
+            <dt>NETWORK</dt><dd>AVAILABLE</dd>
+            <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+            <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+            <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+          </dl>
+        </div>
+        <div class="card status"> <div class="entity">SMEE</div>
+          <div class="state">OFFLINE</div>
+          <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+          <dl>
+            <dt>TD_ID</dt><dd>NUMBERWANG</dd>
+            <dt>NETWORK</dt><dd>AVAILABLE</dd>
+            <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+            <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+            <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+          </dl>
+        </div>
+        <div class="card status"> <div class="entity">TOOTLES</div>
+          <div class="state warning">TERMINATED</div>
+          <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+          <dl>
+            <dt>TD_ID</dt><dd>WOLF359</dd>
+            <dt>NETWORK</dt><dd>AVAILABLE</dd>
+            <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+            <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+            <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+          </dl>
+        </div>
+
+      </div>
+    </main>
   </body>
 </html>
