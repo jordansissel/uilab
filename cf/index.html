@@ -3,24 +3,157 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <section class="dialog" style="width: 15em">
-      <header class="title">THIS IS FINE</header>
-      <div class="content">
-        I'm okay with the events that are unfolding currently.
-      </div>
-    </section>
 
-    <section class="dialog warning">
-      <header class="title">WARNING</header>
-      <div class="content">
-        Hello world
-      </div>
-    </section>
+		<style>
+			.demo-dialogs {
+				display: grid;
+				width: 40em;
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.demo-frame {
+				display: grid;
+				width: 40em;
+				height: 25em;
+
+				grid-template-columns: 1fr;
+				grid-template-rows: 1fr 3rem;
+
+				border: 20px solid #A0A098;
+				border-radius: 10% / 50%;
+				outline: 1px solid white;
+				box-shadow: 
+					inset var(--fg) -2px -2px 1px,
+					inset rgb(from var(--bg) r g b / 80%) 4px 4px 5px,
+					inset rgb(from var(--fg) calc(r * 0.4) calc(g * .5) calc(b * .5) / 80%) -4px -4px 4px,
+					rgb(from var(--fg) r g b / 50%) -4px 0 8px,
+					rgb(from var(--fg) r g b / 50%) -4px 0 8px,
+					rgb(from var(--fg) r g b / 50%) -16px 0 32px,
+					rgb(from var(--fg) r g b / 50%) 16px 0 32px,
+					inset rgb(from var(--fg) r g b / 40%) 8px 8px 16px,
+					inset rgb(from var(--fg) r g b / 40%) 8px 8px 128px,
+					inset rgb(from var(--fg) r g b / 40%) -8px -8px 16px,
+					inset rgb(from var(--fg) r g b / 40%) -8px -8px 128px
+				;
+				align-content: middle;
+
+				padding: var(--padding);
+				margin: 4em;
+			}
+
+			.demo-frame > .content {
+				margin: auto;
+			}
+
+			.demo-frame > .content > * {
+				display: none;
+				max-width: 20em;
+			}
+
+			.show {
+				display: revert !important;
+			}
+
+			.demo-frame > .buttons {
+				display: grid;
+				width: 87%;
+				margin: auto;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+			}
+
+			.demo-frame > .buttons > button {
+				width: initial;
+				margin: var(--padding);
+			}
+
+		</style>
+		<script>
+			function showDialog(color) {
+				let selector;
+				if (color === undefined) {
+					selector = `.demo-frame section`;
+				} else {
+					selector = `.demo-frame section.${color}`;
+				}
+
+				document.querySelectorAll(`.demo-frame section.show`).forEach((e) => e.classList.remove("show"));
+
+				console.log(selector);
+				let item = document.querySelectorAll(selector);
+				console.log(item);
+				item[0].classList.toggle('show');
+			}
+		</script>
+  </head>
+  <body class="crt">
+		<div class="demo-frame">
+			<div class="content">
+				<section class="dialog">
+					<header class="title">THIS IS FINE</header>
+					<div class="content">
+						I'm okay with the events that are unfolding currently.
+					</div>
+				</section>
+
+				<section class="dialog red">
+					<header class="title">WEAPONS MALFUNCTION</header>
+					<div class="content"> Uh, everything is under control. Situation normal. Had a slight weapons malfunction. </div>
+				</section>
+
+				<section class="dialog green">
+					<header class="title">SUPER GREEN</header>
+					<div class="content"> 
+						what's wrong with you? What you screamin' for? Every five minutes there's something' - a bomb or somethin'. I'm leavin'. Bzzzt
+					</div>
+				</section>
+
+				<section class="dialog yellow">
+					<header class="title">Ripley</header>
+					<div class="content"> 
+						You know, Burk. I don't know which species is worse. You don't see them fucking eachother over for a goddamn percentage.
+					</div>
+				</section>
+			</div>
+			<div class="buttons">
+				<button class="up" tabindex="0" onclick="showDialog()"> Fine </button>
+				<button class="up red" tabindex="0" onclick="showDialog('red')"> Weapons </button>
+				<button class="up yellow" tabindex="0" onclick="showDialog('yellow')"> Ripley </button>
+				<button class="up green" tabindex="0" onclick="showDialog('green')"> Ruby Rhod </button>
+			</div>
+		</div>
+
+		<h1> widgets </h1>
+
+		<div class="demo-dialogs">
+			<section class="dialog">
+				<header class="title">THIS IS FINE</header>
+				<div class="content">
+					I'm okay with the events that are unfolding currently.
+				</div>
+			</section>
+
+			<section class="dialog red">
+				<header class="title">WEAPONS MALFUNCTION</header>
+				<div class="content"> Uh, everything is under control. Situation normal. Had a slight weapons malfunction. </div>
+			</section>
+
+			<section class="dialog green">
+				<header class="title">SUPER GREEN</header>
+				<div class="content"> 
+					what's wrong with you? What you screamin' for? Every five minutes there's something' - a bomb or somethin'. I'm leavin'. Bzzzt
+				</div>
+			</section>
+
+			<section class="dialog yellow">
+				<header class="title">Ripley</header>
+				<div class="content"> 
+					You know, Burk. I don't know which species is worse. You don't see them fucking eachother over for a goddamn percentage.
+				</div>
+			</section>
+		</div>
 
     <section>
-      <button class="priority" tabindex="0" onclick="document.querySelectorAll('.modal .progress *').forEach((e) => e.style.width = '100%')">
+      <button class="yellow" tabindex="0" onclick="document.querySelectorAll('.modal .progress *').forEach((e) => e.style.width = '100%')">
         Proceed
       </button>
       <button tabindex="0" onclick="document.querySelectorAll('.modal .progress *').forEach((e) => e.style.width = '0%')">
@@ -30,7 +163,7 @@
     </section>
 
     <section>
-      <button class="up priority" tabindex="0">
+      <button class="up yellow" tabindex="0">
         Proceed
       </button>
       <button class="up" tabindex="0">
@@ -38,7 +171,7 @@
       </button>
     </section>
 
-    <section class="modal">
+    <section class="modal blue frosted">
       <div>
       SYSTEM BOOT
       </div>

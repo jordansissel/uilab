@@ -1,3 +1,16 @@
+/**
+ * ChicagoFLF
+ * Designed by Robin Casady and Susan Kare
+ * License: SIL Open Font License 1.1
+ * Source: https://usemodify.com/fonts/chicago/
+ */
+@font-face {
+  font-family: 'ChicagoFLF';
+  font-style: normal;
+  font-weight: 700;
+	src: url('assets/Chicagoflf-2OEe.ttf') format('woff');
+}
+
 @font-face {
   font-family: 'Silom';
   font-style: normal;
@@ -6,6 +19,7 @@
 }
 
 dl, dd, dt,
+div, span,
 button {
   margin: 0;
   padding: 0;
@@ -17,15 +31,15 @@ button {
 }
 
 :root {
-
   /*
    * Slightly muted options
    * --blue: #4f8acb; 
    * --red: #cb4f4f;
    * --yellow: #daca63;
    * */
-  --blue: #4395f0;
-  --green: #0ab28b;
+
+  --blue: #3488f0;
+  --green: #50f034;
   --red: #ec5d5d;
   --yellow: #f1df6c;
   --white: #d8dfd8;
@@ -33,51 +47,37 @@ button {
   --padding: 4px;
   --border: 2px;
 
-  --bg: #002038;;
+	--darken: 0.15;
+  --bg: rgb(from var(--blue) calc(r * var(--darken)) calc(g * var(--darken)) calc(b * var(--darken)) / 100%);
   --fg: var(--white);
   --faded-color: rgb(from var(--fg) r g b / 20%);
+	--pixel-bleed: rgb(from var(--fg) r g b / 40%);
 
   --button-tag: 6;
+
 }
 
 html {
   background-color: var(--bg);
   color: var(--fg);
 
-  font-family: 'Silom', 'Courier New', monospace, sans-serif;
+  font-family: 'ChicagoFLF', 'Silom', 'Courier New', monospace, sans-serif;
   height: 100%;
 }
 
 body {
   height: 100%;
+	padding: var(--padding);
 }
 
 body > * {
-  margin: var(--padding);
   margin-bottom: 1rem;
-}
-
-.warning {
-  --faded-color: rgb(from var(--red) r g b / 20%);
-  --fg: var(--red);
-  color: var(--fg);
-  padding-left: 0.5em;
-}
-
-.warning > * {
-  color: var(--fg);
-}
-
-.dialog.warning {
-  background-color: var(--faded-color);
-  border-color: var(--red);
-  --faded-color: rgb(from var(--red) r g b / 20%);
-  color: var(--white);
 }
 
 section {
   margin: var(--padding);
   margin-bottom: 1rem;
+	width: fit-content;
 }
 
 section.dialog {
@@ -89,6 +89,9 @@ section.dialog {
 }
 
 section.dialog > header {
+	/* Header text color is the background, so set blend mode to 'screen' to allow crt effects/noise to show */
+  mix-blend-mode: screen;
+
   background-color: var(--fg);
   color: var(--bg);
 
@@ -101,6 +104,7 @@ section.dialog > header {
 }
 
 .modal {
+
   border-style: double;
   border-width: calc(var(--border) * 2);
   width: fit-content;
@@ -110,16 +114,16 @@ section.dialog > header {
   -webkit-text-stroke: 0.5px rgb(from var(--blue) calc(r * 1.2) calc(g * 1.2) calc(b * 1.2) / 100%);
 
   padding: 0.33em;
-
-  color: var(--blue);
-  border-color: var(--blue);
 }
 
 .crt::before {
   content: "";
   position: fixed;
+
+	/* mouse events should never go to this overlay element */
+	pointer-events: none;
   inset: 0;
-  mix-blend-mode: multiiply;
+  mix-blend-mode: normal;
 
   background: repeating-linear-gradient(
     to bottom,
@@ -128,17 +132,49 @@ section.dialog > header {
     transparent 1px,
     transparent 0.25rem
     );
+
+	filter: url('data:image/svg+xml,\
+    <svg xmlns="http://www.w3.org/2000/svg">\
+      <filter id="wiggling" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">\
+        <feTurbulence type="turbulence" baseFrequency="0.02 0.1" numOctaves="3" seed="1" stitchTiles="noStitch" result="turbulence" />\
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="G" yChannelSelector="A" result="displacementMap" />\
+      </filter>\
+    </svg>#wiggling')
+		blur(0.2px)
+		opacity(80%)
+		;
 }
 
-.crt {
-  text-shadow: rgb(from var(--fg) r g b / 30%) 0.25px 0.25px 9px;
+.crt::after {
+  content: "";
+  position: fixed;
 
+	/* mouse events should never go to this overlay element */
+	pointer-events: none;
+  inset: 0;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.20) 0px,
+    rgba(0, 0, 0, 0.20) 0.5px,
+    transparent 1px,
+    transparent 0.25rem
+    );
+
+}
+
+.crt * {
+  text-shadow: 
+		var(--pixel-bleed) 0px -0.25rem 0.25em,
+		var(--pixel-bleed) 0px 0.25rem 0.25em;
+}
+
+.crt button, .crt section {
   box-shadow: 
-    // Outer box glow
-    rgb(from var(--fg) r g b / 100%) 0.25px 0.25px 8px,
-
-    // Inner glow
-    inset rgb(from var(--fg) r g b / 12%) 0.25px 0.25px 8px;
+    /* Outer box glow */
+    var(--pixel-bleed) 0.25px 0.25px 8px,
+    /* Inner glow */
+    inset var(--pixel-bleed) 0.25px 0.25px 8px;
 }
 
 .grid-3 {
@@ -157,10 +193,32 @@ section.dialog > header {
 }
 
 .blue {
-  color: var(--blue);
-  border-color: var(--blue);
-  background-color: var(--blue);
   --fg: var(--blue);
+}
+
+.red {
+  --fg: var(--red);
+} 
+
+.yellow {
+  --fg: var(--yellow);
+}
+
+.green {
+  --fg: var(--green);
+}
+
+.red, .blue, .yellow, .green {
+  --faded-color: rgb(from var(--fg) r g b / 20%);
+	--pixel-bleed: rgb(from var(--fg) r g b / 40%);
+
+  color: var(--fg);
+  border-color: var(--fg);
+}
+
+
+.frosted {
+	background-color: var(--faded-color);
 }
 
 
@@ -266,17 +324,23 @@ button.up:hover, button.up:focus {
 }
 
 .progress * {
-  --progress: 0;
+  --progress: 0%;
   text-align: start;
-  word-break: break-all;
   height: 1lh;
   overflow: hidden;
+  word-break: break-all;
 
   width: var(--progress);
 
-  transition: width 1s;
+	/* XXX: Could use 'steps' here for the transition function... */
+  transition: width 1s cubic-bezier(0.37, 0, 0.63, 1);
+
+  /* transition: width 1s steps(10, jump-both); */
 }
 
+/* A hack to make the "typing" effect work on all characters of the content.
+ * Without this, the first letter is smoothly scrolled instead of appearing instantly
+ */
 .progress *::before  {
   content: " ";
   display: inline-block;
