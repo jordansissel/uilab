@@ -5,24 +5,39 @@
   src: local('Silom'), url('assets/SilomBol.woff') format('woff');
 }
 
-dl {
+dl, dd, dt,
+button {
   margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 :root {
 
-  --blue: #4f8acb;
+  /*
+   * Slightly muted options
+   * --blue: #4f8acb; 
+   * --red: #cb4f4f;
+   * --yellow: #daca63;
+   * */
+  --blue: #4395f0;
   --green: #0ab28b;
-  --red: #cb4f4f;
-  --yellow: #daca63;
+  --red: #ec5d5d;
+  --yellow: #f1df6c;
   --white: #d8dfd8;
 
   --padding: 4px;
   --border: 2px;
 
-  --bg: #023;
+  --bg: #002038;;
   --fg: var(--white);
   --faded-color: rgb(from var(--fg) r g b / 20%);
+
+  --button-tag: 6;
 }
 
 html {
@@ -32,11 +47,12 @@ html {
   font-family: 'Silom', 'Courier New', monospace, sans-serif;
   height: 100%;
 }
+
 body {
   height: 100%;
 }
 
-main > * {
+body > * {
   margin: var(--padding);
   margin-bottom: 1rem;
 }
@@ -44,11 +60,12 @@ main > * {
 .warning {
   --faded-color: rgb(from var(--red) r g b / 20%);
   --fg: var(--red);
-  /*
-  background-color: var(--faded-color);
-  */
   color: var(--fg);
   padding-left: 0.5em;
+}
+
+.warning > * {
+  color: var(--fg);
 }
 
 .dialog.warning {
@@ -88,6 +105,7 @@ section.dialog > header {
   border-width: calc(var(--border) * 2);
   width: fit-content;
   font-size: 3em;
+  text-align: center;
   /* A touch of an outline on the text */
   -webkit-text-stroke: 0.5px rgb(from var(--blue) calc(r * 1.2) calc(g * 1.2) calc(b * 1.2) / 100%);
 
@@ -196,39 +214,71 @@ section.dialog > header {
 }
 */
 
-.button {
-  display: inline-block;
-  width: fit-content;
-  padding: var(--padding);
+button {
   border: var(--border) solid var(--fg);
-  margin-left: var(--padding);
-  margin-right: var(--padding);
+  color: var(--fg);
+  padding: var(--padding);
+  background-color: var(--faded-color);
+  width: fit-content;
 
+  border-style: solid;
+  border-color var(--fg);
 
-  height: 1.5em;
   /* make it align on the bottom? */
-  line-height: 250%;
+  --tag: calc(var(--border) * var(--button-tag));
+  padding-left: var(--tag);
+
+  text-align: end;
+  vertical-align: bottom;
 }
 
-.button-top {
+button.tab {
+  width: 8em;
+}
+
+button.up {
+  padding-left: var(--padding);
+  padding-top: calc(var(--tag) + var(--border));
+}
+
+button.priority {
+  --fg: var(--yellow);
+}
+
+button:hover, button:focus, button:focus-visible {
+  padding-left: var(--padding);
+  border-left-width: calc(var(--tag) * 0.85);
+  outline: none;
+  background-color: rgb(from var(--bg) r g b / 20%);
+  text-decoration: underline;
+}
+
+button.up:hover, button.up:focus {
+  padding-top: var(--padding);
+  border-left-width: var(--border);
+
+  /* Vertical pixels are shorter than horizontal ones...? */
+  border-top-width: var(--tag);
+}
+
+.progress {
+  display: inline-flex;
+}
+
+.progress * {
+  --progress: 0;
+  text-align: start;
+  word-break: break-all;
+  height: 1lh;
+  overflow: hidden;
+
+  width: var(--progress);
+
+  transition: width 1s;
+}
+
+.progress *::before  {
+  content: " ";
   display: inline-block;
-  width: fit-content;
-  padding: var(--padding);
-  border: var(--border) solid var(--fg);
-  margin-left: var(--padding);
-  margin-right: var(--padding);
-
-  height: 1.5em;
-  /* make it align on the bottom? Bottom == height + 100% */
-  line-height: 250%;
 }
 
-.button-top.selected {
-  --fg: var(--yellow);
-  border-top: calc(var(--border) * 6) solid var(--fg);
-}
-
-.button.selected {
-  --fg: var(--yellow);
-  border-left: calc(var(--border) * 6) solid var(--fg);
-}
