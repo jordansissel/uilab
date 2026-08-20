@@ -116,9 +116,22 @@ section.dialog > header {
   padding: 0.33em;
 }
 
+.crt {
+  --bezel-radius-1: 70px;
+  --bezel-radius-2: calc(var(--bezel-radius-1) * 2);
+  --bezel-thickness: 20px;
+
+  /* To allow the ::before and ::after overlay effects to position themselves absolutely */
+  position: relative;
+  overflow: hidden;
+}
+
 .crt::before {
   content: "";
-  position: fixed;
+  position: absolute;
+
+  /* clip crt rendering effects to inside the border -- the glass */
+  border-radius: calc(var(--bezel-radius-1) - var(--bezel-thickness)) / calc(var(--bezel-radius-2) - var(--bezel-thickness));
 
 	/* mouse events should never go to this overlay element */
 	pointer-events: none;
@@ -147,11 +160,14 @@ section.dialog > header {
 
 .crt::after {
   content: "";
-  position: fixed;
+  position: absolute;
 
 	/* mouse events should never go to this overlay element */
 	pointer-events: none;
   inset: 0;
+
+  /* clip crt rendering effects to inside the border -- the glass */
+  border-radius: calc(var(--bezel-radius-1) - var(--bezel-thickness)) / calc(var(--bezel-radius-2) - var(--bezel-thickness));
 
   background: repeating-linear-gradient(
     to bottom,

@@ -19,8 +19,9 @@
 				grid-template-columns: 1fr;
 				grid-template-rows: 1fr 3rem;
 
-				border: 20px solid #A0A098;
-				border-radius: 10% / 50%;
+				border: var(--bezel-thickness) solid #A0A098;
+				border-radius: var(--bezel-radius-1) / var(--bezel-radius-2);
+
 				outline: 0.5px solid white;
 				box-shadow: 
 					/* bottom+right bezel highlight */
@@ -97,7 +98,7 @@
 
 			.demo-frame > .buttons {
 				display: grid;
-				width: 87%;
+				width: 90%;
 				grid-template-columns: 1fr 1fr 1fr 1fr;
 			}
 
@@ -125,8 +126,8 @@
 			}
 		</script>
   </head>
-  <body class="crt">
-		<div class="demo-frame">
+  <body class="xcrt">
+		<div class="crt demo-frame">
 			<div class="content">
 				<section class="dialog">
 					<header class="title">THIS IS FINE</header>
