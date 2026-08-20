@@ -24,7 +24,6 @@ button {
   margin: 0;
   padding: 0;
   border: 0;
-  background-color: none;
   color: inherit;
   font-family: inherit;
   font-size: inherit;
@@ -134,8 +133,8 @@ section.dialog > header {
     to bottom,
     rgba(0, 0, 0, 0.30) 0px,
     rgba(0, 0, 0, 0.30) 0.25px,
-    transparent 1.25px,
-    transparent 0.25rem
+    transparent .75px,
+    transparent 0.10rem
     );
 }
 
@@ -176,12 +175,17 @@ section.dialog > header {
 }
 
 .grid-3 {
-  display: grid;
+  display: grid !important;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.grid-3-gap {
+.grid-3-gap.show {
   display: grid;
+  width: 90%;
+  margin: auto;
+}
+
+.grid-3-gap {
   grid-template-columns: 1fr 1fr 1fr;
   border: var(--border) solid var(--fg);
 
@@ -214,15 +218,21 @@ section.dialog > header {
   border-color: var(--fg);
 }
 
-
 .frosted {
 	background-color: var(--faded-color);
 }
 
 
 .card {
+  --faded-color: rgb(from var(--fg) 
+  calc(r * 0.25) 
+  calc(g * 0.25) 
+  calc(b * 0.25) 
+  / 100%);
   padding: var(--padding);
-  background-color: var(--bg);
+	background-color: var(--faded-color);
+}
+
 }
 
 .status {
@@ -442,7 +452,7 @@ button.up:hover, button.up:focus {
 
 .terminal > .buttons {
   display: grid;
-  width: 90%;
+  width: 85%;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 

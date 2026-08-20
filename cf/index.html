@@ -23,7 +23,7 @@
         grid-template-rows: 1fr 3rem;
 
       }
-      .terminal > .content > section {
+      .terminal > .content > .dialog {
         max-width: 20em;
       }
 
@@ -60,7 +60,7 @@
       </filter>
     </svg>
 
-		<div class="crt terminal">
+		<div class="terminal">
 			<div class="content">
 				<section class="dialog">
 					<header class="title">THIS IS FINE</header>
@@ -88,16 +88,91 @@
 					<div class="content"> 
 						You know, Burk. I don't know which species is worse. You don't see them fucking eachother over for a goddamn percentage.
 					</div>
-				</section>
+        </section>
+
+        <section class="grid-3-gap blue" style="font-size: 8pt;">
+          <div class="card status frosted"> <div class="entity">WENDY</div>
+            <div class="state">OFFLINE</div>
+            <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+            <dl>
+              <dt>TD_ID</dt><dd>FN2187</dd>
+              <dt>NETWORK</dt><dd>AVAILABLE</dd>
+              <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+              <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+              <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+            </dl>
+          </div>
+          <div class="card status"> <div class="entity">CURLY</div>
+            <div class="state">OFFLINE</div>
+            <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+            <dl>
+              <dt>TD_ID</dt><dd>T100529</dd>
+              <dt>NETWORK</dt><dd>AVAILABLE</dd>
+              <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+              <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+              <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+            </dl>
+          </div>
+          <div class="card status"> <div class="entity">NIBS</div>
+            <div class="state">OFFLINE</div>
+            <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+            <dl>
+              <dt>TD_ID</dt><dd>TK427</dd>
+              <dt>NETWORK</dt><dd>AVAILABLE</dd>
+              <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+              <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+              <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+            </dl>
+          </div>
+          <div class="card status"> <div class="entity">SLIGHTLY</div>
+            <div class="state">OFFLINE</div>
+            <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+            <dl>
+              <dt>TD_ID</dt><dd>1</dd>
+              <dt>NETWORK</dt><dd>AVAILABLE</dd>
+              <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+              <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+              <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+            </dl>
+          </div>
+          <div class="card status"> <div class="entity">SMEE</div>
+            <div class="state">OFFLINE</div>
+            <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+            <dl>
+              <dt>TD_ID</dt><dd>NUMBERWANG</dd>
+              <dt>NETWORK</dt><dd>AVAILABLE</dd>
+              <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+              <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+              <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+            </dl>
+          </div>
+          <div class="card status"> <div class="entity">TOOTLES</div>
+            <div class="state warning">TERMINATED</div>
+            <hr><span><!-- so we don't mess up nth-child selector --></span>
+
+            <dl>
+              <dt>TD_ID</dt><dd>WOLF359</dd>
+              <dt>NETWORK</dt><dd>AVAILABLE</dd>
+              <dt>NETWORK CONNECTION</dt><dd>OFFLINE</dd>
+              <dt>PORT CONNECTION</dt><dd>NOT FOUND</dd>
+              <dt>GEOGRAPHICAL DATA</dt><dd>NOT AVAILABLE</dd>
+            </dl>
+          </div>
+        </section>
 			</div>
 			<div class="buttons">
-				<button class="up" tabindex="0" onclick="showDialog()"> Fine </button>
+				<button class="up blue" tabindex="0" onclick="showDialog('blue')"> Aliens </button>
 				<button class="up red" tabindex="0" onclick="showDialog('red')"> Weapons </button>
 				<button class="up yellow" tabindex="0" onclick="showDialog('yellow')"> Ripley </button>
 				<button class="up green" tabindex="0" onclick="showDialog('green')"> Ruby Rhod </button>
 			</div>
 		</div>
-
+ 
 		<h1> widgets </h1>
 
 		<div class="demo-dialogs">
