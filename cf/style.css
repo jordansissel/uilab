@@ -116,80 +116,62 @@ section.dialog > header {
   padding: 0.33em;
 }
 
-.crt {
-  --bezel-radius-1: 70px;
-  --bezel-radius-2: calc(var(--bezel-radius-1) * 2);
-  --bezel-thickness: 20px;
-
-  /* To allow the ::before and ::after overlay effects to position themselves absolutely */
-  position: relative;
-  overflow: hidden;
-}
-
-.crt::before {
+.terminal::after {
   content: "";
   position: absolute;
+  inset: 0;
+  height: 100%;
+  z-index: 10;
 
   /* clip crt rendering effects to inside the border -- the glass */
   border-radius: calc(var(--bezel-radius-1) - var(--bezel-thickness)) / calc(var(--bezel-radius-2) - var(--bezel-thickness));
 
-	/* mouse events should never go to this overlay element */
-	pointer-events: none;
-  inset: 0;
-  mix-blend-mode: normal;
+  /* mouse events should never go to this overlay element */
+  pointer-events: none;
 
+  /* Scanlines */
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.20) 0px,
-    rgba(0, 0, 0, 0.20) 0.5px,
-    transparent 1px,
+    rgba(0, 0, 0, 0.30) 0px,
+    rgba(0, 0, 0, 0.30) 0.25px,
+    transparent 1.25px,
     transparent 0.25rem
     );
-
-	filter: url('data:image/svg+xml,\
-    <svg xmlns="http://www.w3.org/2000/svg">\
-      <filter id="wiggling" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">\
-        <feTurbulence type="turbulence" baseFrequency="0.02 0.1" numOctaves="3" seed="1" stitchTiles="noStitch" result="turbulence" />\
-        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="G" yChannelSelector="A" result="displacementMap" />\
-      </filter>\
-    </svg>#wiggling')
-		blur(0.2px)
-		opacity(80%)
-		;
 }
 
-.crt::after {
-  content: "";
-  position: absolute;
-
-	/* mouse events should never go to this overlay element */
-	pointer-events: none;
-  inset: 0;
-
-  /* clip crt rendering effects to inside the border -- the glass */
-  border-radius: calc(var(--bezel-radius-1) - var(--bezel-thickness)) / calc(var(--bezel-radius-2) - var(--bezel-thickness));
-
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.20) 0px,
-    rgba(0, 0, 0, 0.20) 0.5px,
-    transparent 1px,
-    transparent 0.25rem
-    );
-
+/* Apple Safari  -- requires svg filters be defined in the DOM already */
+@supports (font: -apple-system-body) {
+  .terminal::after {
+    filter: url('#wiggling');
+  }
 }
 
-.crt * {
+/* Other browsers seem to support svg data urls ... but also not supporting DOM-sourced svg filters?*/
+@supports not (font: -apple-system-body) {
+  .terminal::after {
+    filter: url('#wiggling');
+  }
+  .terminal::after {
+    filter: url('data:image/svg+xml,\
+      <svg xmlns="http://www.w3.org/2000/svg">\
+        <filter id="wiggling" >\
+          <feTurbulence type="noise" baseFrequency="0.02 0.1" seed="10000" numOctaves="1" result="turbulence"/>\
+          <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="50" xChannelSelector="G" yChannelSelecto\r="A" result="displacementMap" />\
+          <feGaussianBlur in="displacementMap" stdDeviation="1" id="soften" />\
+          <feComposite in="SourceGraphic" in2="soften" operator="over" />\
+        </filter>\
+      </svg>#wiggling')
+      opacity(80%)
+    ;
+  }
+}
+
+.terminal button, .terminal section {
   text-shadow: 
 		var(--pixel-bleed) 0px -0.25rem 0.25em,
 		var(--pixel-bleed) 0px 0.25rem 0.25em;
-}
-
-.crt button, .crt section {
   box-shadow: 
-    /* Outer box glow */
-    var(--pixel-bleed) 0.25px 0.25px 8px,
-    /* Inner glow */
+    var(--pixel-bleed) 0.25px 0.25px 16px,
     inset var(--pixel-bleed) 0.25px 0.25px 8px;
 }
 
@@ -319,7 +301,7 @@ button.priority {
   --fg: var(--yellow);
 }
 
-button:hover, button:focus, button:focus-visible {
+button:focus-visible, button:hover, button:focus {
   padding-left: var(--padding);
   border-left-width: calc(var(--tag) * 0.85);
   outline: none;
@@ -360,5 +342,112 @@ button.up:hover, button.up:focus {
 .progress *::before  {
   content: " ";
   display: inline-block;
+}
+
+.terminal {
+  --bezel-radius-1: 75px;
+  --bezel-radius-2: calc(var(--bezel-radius-1) * 2.5);
+  --bezel-thickness: 20px;
+
+  /* Nice chunky display bezel... */
+  border: var(--bezel-thickness) solid #A0A098;
+
+  /* Rounded weirdly */
+  border-radius: var(--bezel-radius-1) / var(--bezel-radius-2);
+
+  /* A touch of contrast for the outside of the border */
+  outline: 0.5px solid white;
+
+  box-shadow: 
+  /* bottom+right bezel highlight */
+  inset var(--fg) -2px -2px 1px, 
+  /* top+left bezel highlight */
+  inset rgb(from var(--bg) r g b / 80%) 4px 4px 5px,
+
+  /* Give some contrast to the outside edge of the bezel */
+  black 0px 0px 5px,
+
+  /* Sharp, short outer glow */
+  rgb(from var(--fg) r g b / 40%) -4px 0 8px,
+  rgb(from var(--fg) r g b / 40%) 4px 0 8px,
+
+  /* Wide outer glow */
+  rgb(from var(--fg) r g b / 40%) -16px 0 32px,
+  rgb(from var(--fg) r g b / 40%) 16px 0 32px,
+
+  /* glass-ish shadowing */
+  inset rgb(from var(--fg) r g b / 40%) 8px 8px 16px,
+  inset rgb(from var(--fg) r g b / 40%) -8px -8px 16px,
+
+  /* CRT glass glow, brighter towards the outside edges */
+  inset rgb(from var(--fg) r g b / 25%) 8px 8px 128px;
+
+  align-content: center;
+
+  /* Pad away from the edge of the screen
+   * Although... CRTs did use overscan...
+   */
+  padding: var(--padding);
+
+  /* To allow the ::before and ::after overlay effects to position themselves absolutely */
+  position: relative;
+
+  /* Clip anything outside the 'screen' */
+  overflow: hidden;
+}
+
+.terminal > * {
+  align-self: center;
+  justify-self: center;
+}
+
+.terminal > .content > section {
+  transition-delay: 300ms;
+  transition-property: opacity;
+  transition-timing-function: steps(3, jump-both);
+}
+
+.terminal > .content > section:not(.show) {
+  display: none;
+}
+
+.terminal > .content > section > div {
+  opacity: 0%;
+  visibility: hidden;
+}
+
+
+@keyframes glitchy-render {
+  0% { opacity: 0; display: revert; }
+  100% { opacity: 100%; display: revert; }
+}
+
+.show {
+  visibility: revert;
+  display: revert;
+  animation: glitchy-render 300ms steps(3, jump-both);
+}
+
+/* Show the section contents slightly after presenting the section frame */
+.terminal > .content > section.show > div {
+  visibility: revert;
+  display: revert;
+
+  animation-name: glitchy-render;
+  animation-duration: 300ms;
+  animation-delay: 200ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: steps(3, jump-both);
+}
+
+.terminal > .buttons {
+  display: grid;
+  width: 90%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.terminal > .buttons > button {
+  width: initial;
+  margin: var(--padding);
 }
 

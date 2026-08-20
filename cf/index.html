@@ -10,114 +10,34 @@
 				width: 40em;
 				grid-template-columns: 1fr 1fr;
 			}
+      .terminal {
+        margin-left: 2em;
+        margin-right: 2em;
+        margin-top: 2em;
 
-			.demo-frame {
-				display: grid;
-				width: 40em;
-				height: 25em;
+        display: grid;
+        width: 40em;
+        height: 25em;
 
-				grid-template-columns: 1fr;
-				grid-template-rows: 1fr 3rem;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 3rem;
 
-				border: var(--bezel-thickness) solid #A0A098;
-				border-radius: var(--bezel-radius-1) / var(--bezel-radius-2);
-
-				outline: 0.5px solid white;
-				box-shadow: 
-					/* bottom+right bezel highlight */
-					inset var(--fg) -2px -2px 1px, 
-					/* top+left bezel highlight */
-					inset rgb(from var(--bg) r g b / 80%) 4px 4px 5px,
-
-					/* inset rgb(from var(--fg) calc(r * 0.4) calc(g * .5) calc(b * .5) / 100%) -4px -4px 4px, */
-
-					/* Give some contrast to the outside edge of the bezel */
-					black 0px 0px 5px,
-
-					/* Sharp, short outer glow */
-					rgb(from var(--fg) r g b / 50%) -4px 0 8px,
-					rgb(from var(--fg) r g b / 50%) 4px 0 8px,
-
-					/* Wide outer glow */
-					rgb(from var(--fg) r g b / 50%) -16px 0 32px,
-					rgb(from var(--fg) r g b / 50%) 16px 0 32px,
-
-					/* glass-ish shadowing */
-					inset rgb(from var(--fg) r g b / 40%) 8px 8px 16px,
-					inset rgb(from var(--fg) r g b / 40%) -8px -8px 16px,
-
-					/* CRT glass glow, brighter towards the outside edges */
-					inset rgb(from var(--fg) r g b / 25%) 8px 8px 128px;
-
-				align-content: center;
-
-				padding: var(--padding);
-				margin: 4em;
-			}
-
-      .demo-frame > * {
-        align-self: center;
-        justify-self: center;
       }
-
-      .demo-frame > .content > section {
-				max-width: 20em;
-
-        transition-delay: 300ms;
-        transition-property: opacity;
-        transition-timing-function: steps(6, jump-both);
+      .terminal > .content > section {
+        max-width: 20em;
       }
-
-      .demo-frame > .content > section:not(.show) {
-        display: none;
-      }
-
-      @keyframes glitchy-render {
-        0% { opacity: 0; display: revert; }
-        100% { opacity: 100%; display: revert; }
-      }
-
-      .demo-frame > .content > section > div {
-        opacity: 0%;
-        visibility: hidden;
-      }
-
-			.show {
-        animation: glitchy-render 300ms steps(3, jump-none);
-			}
-
-      .demo-frame > .content > section.show > div {
-        visibility: revert;
-
-        animation-name: glitchy-render;
-        animation-duration: 300ms;
-        animation-delay: 200ms;
-        animation-fill-mode: forwards;
-        animation-timing-function: steps(3, jump-none);
-      }
-
-			.demo-frame > .buttons {
-				display: grid;
-				width: 90%;
-				grid-template-columns: 1fr 1fr 1fr 1fr;
-			}
-
-			.demo-frame > .buttons > button {
-				width: initial;
-				margin: var(--padding);
-			}
 
 		</style>
 		<script>
 			function showDialog(color) {
 				let selector;
 				if (color === undefined) {
-					selector = `.demo-frame section`;
+					selector = `.terminal section`;
 				} else {
-					selector = `.demo-frame section.${color}`;
+					selector = `.terminal section.${color}`;
 				}
 
-				document.querySelectorAll(`.demo-frame section.show`).forEach((e) => e.classList.remove("show"));
+				document.querySelectorAll(`.terminal section.show`).forEach((e) => e.classList.remove("show"));
 
 				console.log(selector);
 				let item = document.querySelectorAll(selector);
@@ -126,8 +46,21 @@
 			}
 		</script>
   </head>
-  <body class="xcrt">
-		<div class="crt demo-frame">
+  <body>
+    <!-- Safari's css filter: url(...) does not work with data urls.
+        As in, `filter: url('data:text/svg+xml,<svg....></svg>#filterId')`
+        As a workaround, it does work if specifying the <svg> in the html *before* the filter is invoked
+    -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none; visibility: hidden">
+      <filter id="wiggling" >
+        <feTurbulence type="noise" baseFrequency="0.02 0.1" seed="10000" numOctaves="1" result="turbulence"/>
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="50" xChannelSelector="G" yChannelSelector="A" result="displacementMap" />
+        <feGaussianBlur in="displacementMap" stdDeviation="1" id="soften" />
+        <feComposite in="SourceGraphic" in2="soften" operator="over" />
+      </filter>
+    </svg>
+
+		<div class="crt terminal">
 			<div class="content">
 				<section class="dialog">
 					<header class="title">THIS IS FINE</header>
