@@ -288,10 +288,10 @@ button {
 
   text-align: end;
   vertical-align: bottom;
-}
 
-button.tab {
-  width: 8em;
+  transition-timing-function: steps(2, end);
+  transition-duration: 100ms;
+  transition-property: padding-left, padding-top, border-left-width, border-top-width, background-color, color;
 }
 
 button.up {

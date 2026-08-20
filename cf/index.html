@@ -21,20 +21,33 @@
 
 				border: 20px solid #A0A098;
 				border-radius: 10% / 50%;
-				outline: 1px solid white;
+				outline: 0.5px solid white;
 				box-shadow: 
-					inset var(--fg) -2px -2px 1px,
+					/* bottom+right bezel highlight */
+					inset var(--fg) -2px -2px 1px, 
+					/* top+left bezel highlight */
 					inset rgb(from var(--bg) r g b / 80%) 4px 4px 5px,
-					inset rgb(from var(--fg) calc(r * 0.4) calc(g * .5) calc(b * .5) / 80%) -4px -4px 4px,
+
+					/* inset rgb(from var(--fg) calc(r * 0.4) calc(g * .5) calc(b * .5) / 100%) -4px -4px 4px, */
+
+					/* Give some contrast to the outside edge of the bezel */
+					black 0px 0px 5px,
+
+					/* Sharp, short outer glow */
 					rgb(from var(--fg) r g b / 50%) -4px 0 8px,
-					rgb(from var(--fg) r g b / 50%) -4px 0 8px,
+					rgb(from var(--fg) r g b / 50%) 4px 0 8px,
+
+					/* Wide outer glow */
 					rgb(from var(--fg) r g b / 50%) -16px 0 32px,
 					rgb(from var(--fg) r g b / 50%) 16px 0 32px,
+
+					/* glass-ish shadowing */
 					inset rgb(from var(--fg) r g b / 40%) 8px 8px 16px,
-					inset rgb(from var(--fg) r g b / 40%) 8px 8px 128px,
 					inset rgb(from var(--fg) r g b / 40%) -8px -8px 16px,
-					inset rgb(from var(--fg) r g b / 40%) -8px -8px 128px
-				;
+
+					/* CRT glass glow, brighter towards the outside edges */
+					inset rgb(from var(--fg) r g b / 25%) 8px 8px 128px;
+
 				align-content: middle;
 
 				padding: var(--padding);
@@ -45,14 +58,42 @@
 				margin: auto;
 			}
 
-			.demo-frame > .content > * {
-				display: none;
+      .demo-frame > .content > section {
 				max-width: 20em;
-			}
+
+        transition-delay: 300ms;
+        transition-property: opacity;
+        transition-timing-function: steps(6, jump-both);
+      }
+
+      .demo-frame > .content > section:not(.show) {
+        opacity: 0%;
+        display: none;
+      }
+
+      @keyframes glitchy-render {
+        0% { opacity: 0; height: 0%; }
+        100% { opacity: 100%; height: 100%; }
+      }
+
+      .demo-frame > .content > section > div {
+        opacity: 0%;
+        visibility: hidden;
+      }
 
 			.show {
-				display: revert !important;
+        animation: glitchy-render 300ms steps(3, jump-none);
 			}
+
+      .demo-frame > .content > section.show > div {
+        visibility: revert;
+
+        animation-name: glitchy-render;
+        animation-duration: 300ms;
+        animation-delay: 200ms;
+        animation-fill-mode: forwards;
+        animation-timing-function: steps(3, jump-none);
+      }
 
 			.demo-frame > .buttons {
 				display: grid;
@@ -97,7 +138,9 @@
 
 				<section class="dialog red">
 					<header class="title">WEAPONS MALFUNCTION</header>
-					<div class="content"> Uh, everything is under control. Situation normal. Had a slight weapons malfunction. </div>
+					<div class="content"> 
+            Uh, everything is under control. Situation normal. Had a slight weapons malfunction. 
+          </div>
 				</section>
 
 				<section class="dialog green">
