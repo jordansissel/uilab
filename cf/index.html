@@ -48,15 +48,16 @@
 					/* CRT glass glow, brighter towards the outside edges */
 					inset rgb(from var(--fg) r g b / 25%) 8px 8px 128px;
 
-				align-content: middle;
+				align-content: center;
 
 				padding: var(--padding);
 				margin: 4em;
 			}
 
-			.demo-frame > .content {
-				margin: auto;
-			}
+      .demo-frame > * {
+        align-self: center;
+        justify-self: center;
+      }
 
       .demo-frame > .content > section {
 				max-width: 20em;
@@ -67,13 +68,12 @@
       }
 
       .demo-frame > .content > section:not(.show) {
-        opacity: 0%;
         display: none;
       }
 
       @keyframes glitchy-render {
-        0% { opacity: 0; height: 0%; }
-        100% { opacity: 100%; height: 100%; }
+        0% { opacity: 0; display: revert; }
+        100% { opacity: 100%; display: revert; }
       }
 
       .demo-frame > .content > section > div {
@@ -98,7 +98,6 @@
 			.demo-frame > .buttons {
 				display: grid;
 				width: 87%;
-				margin: auto;
 				grid-template-columns: 1fr 1fr 1fr 1fr;
 			}
 
