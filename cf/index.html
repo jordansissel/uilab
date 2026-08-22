@@ -27,6 +27,15 @@
         max-width: 20em;
       }
 
+      .controls {
+        top: 0px;
+        position: fixed;
+        background-color: var(--bg);
+        padding: var(--padding);
+        border-bottom: 2px solid var(--fg);
+        z-index: 1;
+      }
+
 		</style>
 		<script>
 			function showDialog(color) {
@@ -59,6 +68,64 @@
         <feComposite in="SourceGraphic" in2="soften" operator="over" />
       </filter>
     </svg>
+
+    <!--
+    <button tabindex="0" popovertarget="controls"> Tune Visuals </button>
+    <div class="controls" popover id="controls">
+    -->
+
+    <div class="controls" id="controls">
+      <div>
+        <label for="scanlines">Scanlines</label>
+        <input type="checkbox" switch checked id="scanlines">
+
+        <label for="phosphor">Phosphor</label>
+        <input type="checkbox" switch checked id="phosphor">
+
+        <label for="dirty">Dirty</label>
+        <input type="checkbox" switch checked id="dirty">
+      </div>
+      <div>
+        <label for="phosphor-offset">Phosphor Offset (in rem)</label>
+        <input type="range" id="phosphor-offset" min="0" max="1" step="0.1">
+
+        <label for="phosphor-size">Phosphor Blur (in rem)</label>
+        <input type="range" id="phosphor-size" min="0" max="1" step="0.1">
+      </div>
+    </div>
+    <script>
+      function theme(elementId, className) {
+        let button = document.getElementById(elementId)
+        button.addEventListener("input", (e) => {
+          document.querySelectorAll(".terminal").forEach((el) => {
+            el.classList.toggle(className, e.target.checked);
+          });
+        });
+
+        // Evaluate theme settings on page load and add classes as needed.
+        window.addEventListener("load", () => {
+          document.querySelectorAll(".terminal").forEach((el) => {
+            el.classList.toggle(className, button.checked);
+          });
+        });
+      }
+
+      theme("scanlines", "scanlines");
+      theme("phosphor", "phosphor");
+      theme("dirty", "dirty");
+
+      function variable(elementId, variableName, units="") {
+        let input = document.getElementById(elementId);
+        input.addEventListener("input", (e) => {
+          let value = e.target.value;
+          console.log(`--${variableName}`, `${value}${units}`);
+          document.documentElement.style.setProperty(`--${variableName}`, `${value}${units}`);
+        });
+      };
+
+      variable("phosphor-offset", "pixel-bleed-offset", "rem");
+      variable("phosphor-size", "pixel-bleed-size", "rem");
+    </script>
 
 		<div class="terminal">
 			<div class="content">

@@ -50,10 +50,12 @@ button {
   --bg: rgb(from var(--blue) calc(r * var(--darken)) calc(g * var(--darken)) calc(b * var(--darken)) / 100%);
   --fg: var(--white);
   --faded-color: rgb(from var(--fg) r g b / 20%);
-	--pixel-bleed: rgb(from var(--fg) r g b / 40%);
 
   --button-tag: 6;
 
+	--pixel-bleed: rgb(from var(--fg) r g b / 40%);
+  --pixel-bleed-offset: 0.10rem;
+  --pixel-bleed-size: 0.40rem;
 }
 
 html {
@@ -128,6 +130,9 @@ section.dialog > header {
   /* mouse events should never go to this overlay element */
   pointer-events: none;
 
+}
+
+.terminal.scanlines::after {
   /* Scanlines */
   background: repeating-linear-gradient(
     to bottom,
@@ -136,18 +141,18 @@ section.dialog > header {
     transparent .75px,
     transparent 0.10rem
     );
-}
+  }
 
 /* Apple Safari  -- requires svg filters be defined in the DOM already */
 @supports (font: -apple-system-body) {
-  .terminal::after {
+  .terminal.dirty::after {
     filter: url('#wiggling');
   }
 }
 
 /* Other browsers seem to support svg data urls ... but also not supporting DOM-sourced svg filters?*/
 @supports not (font: -apple-system-body) {
-  .terminal::after {
+  .terminal.dirty::after {
     filter: url('#wiggling');
   }
   .terminal::after {
@@ -165,13 +170,33 @@ section.dialog > header {
   }
 }
 
-.terminal button, .terminal section {
+/* Define local pixel-bleed-size */
+@property --l-pixel-bleed-size {
+  syntax: '<length>';
+  initial-value: 0;
+  inherits: true;
+}
+
+.terminal.phosphor button, .terminal.phosphor section {
+  --l-pixel-bleed-size: var(--pixel-bleed-size);
   text-shadow: 
-		var(--pixel-bleed) 0px -0.25rem 0.25em,
-		var(--pixel-bleed) 0px 0.25rem 0.25em;
+		var(--pixel-bleed) 0px calc(-1 * var(--pixel-bleed-offset)) var(--l-pixel-bleed-size),
+		var(--pixel-bleed) 0px var(--pixel-bleed-offset) var(--l-pixel-bleed-size);
+
+
+    /*var(--pixel-bleed) var(--pixel-bleed-offset) var(--pixel-bleed-offset) 16px,*/
   box-shadow: 
-    var(--pixel-bleed) 0.25px 0.25px 16px,
-    inset var(--pixel-bleed) 0.25px 0.25px 8px;
+    0 0 calc(1 * var(--l-pixel-bleed-size)),
+    inset 0 0 calc(1 * var(--l-pixel-bleed-size));
+
+  animation: phosphor-pulse 2s linear both; 
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes phosphor-pulse {
+  0% { --l-pixel-bleed-size: calc(var(--pixel-bleed-size) * 0.5); }
+  100% { --l-pixel-bleed-size: calc(var(--pixel-bleed-size) * 1.5); }
 }
 
 .grid-3 {
